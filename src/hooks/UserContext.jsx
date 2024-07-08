@@ -1,14 +1,28 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState,useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
-  const [userData, setUserData] = useState({}); // Correção aqui
+  const [userData, setUserData] = useState({}); 
 
-  const putUserData = (userInfo) => {
+  const putUserData = async (userInfo) => {
     setUserData(userInfo);
+
+    await localStorage.setItem('codeburger:userData', JSON.stringify(userInfo))
   };
+
+useEffect(() => {
+
+  const loadUserData = async () => {
+    const clientInfo = await localStorage.getItem('codeburger:userData')
+
+    console.log(clientInfo)
+  }
+
+  loadUserData()
+},[]);
+
 
   return (
     <UserContext.Provider value={{ userData, putUserData }}>
@@ -28,7 +42,7 @@ export const useUser = () => {
 };
 
 UserProvider.propTypes = {
-  children: PropTypes.node.isRequired, // Adicionado .isRequired para indicar que é obrigatório
+  children: PropTypes.node.isRequired, 
 };
 
 
