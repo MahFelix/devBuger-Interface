@@ -17,7 +17,9 @@ useEffect(() => {
   const loadUserData = async () => {
     const clientInfo = await localStorage.getItem('codeburger:userData')
 
-    console.log(clientInfo)
+    if(clientInfo) {
+      setUserData(JSON.parse(clientInfo))
+    }
   }
 
   loadUserData()
