@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import apiCodeBurger from "../../services/api";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useUser } from '../../hooks/UserContext';
 import { useState } from 'react';
 import {
@@ -13,7 +13,6 @@ import {
     LeftContainer,
     RightContainer,
     Title,
-    Link
 } from './styles';
 import Logo from '../../assets/logo.svg';
 import { Button } from '../../components/Button/';
@@ -30,7 +29,8 @@ const schema = yup.object({
 }).required();
 
 export function Login() {
-    const { putUserData, userData } = useUser();
+
+    const { putUserData } = useUser();
     const navigate = useNavigate();
 
     const {
@@ -60,8 +60,8 @@ export function Login() {
                 error: 'Email ou Senha Incorretos 🤯'
             }
         );
+        
         putUserData(response.data);
-        console.log(userData);
     };
 
     return (

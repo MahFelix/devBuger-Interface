@@ -3,7 +3,7 @@ import React from "react"
 import HomeLogo from '../../assets/homedalogo.svg'
 
 import {Container, HomeImg} from './styles'
-import CategoryCarousel from "../../components/Button/CategoryCarrousel"
+import CategoryCarousel from "../../components/CategoryCarousel"
 
 export function Home() {
     
