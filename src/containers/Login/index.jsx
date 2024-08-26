@@ -10,11 +10,9 @@ import {
     Container,
     Form,
     InputContainer,
-    LeftContainer,
     RightContainer,
     Title,
 } from './styles';
-import Logo from '../../assets/logo.svg';
 import { Button } from '../../components/Button/';
 
 const schema = yup.object({
@@ -66,13 +64,10 @@ export function Login() {
 
     return (
         <Container>
-            <LeftContainer>
-                <img src={Logo} alt='logo-devburger' />
-            </LeftContainer>
 
             <RightContainer>
                 <Title>
-                    Olá, seja bem vindo ao <span>Dev Burguer!</span>
+                    Olá, seja bem vindo ao <span>Poupe Mais!</span>
                     <br />
                     Acesse com seu <span> Login e senha.</span>
                 </Title>

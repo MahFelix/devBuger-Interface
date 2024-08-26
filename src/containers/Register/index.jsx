@@ -5,18 +5,15 @@ import apiCodeBurger from "../../services/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-
 import { 
     Container, 
     Form, 
     InputContainer, 
-    LeftContainer, 
     RightContainer, 
     Title, 
-    Link } from './styles';
-import Logo from '../../assets/logo.svg';
+    Link 
+} from './styles';
 import { Button } from '../../components/Button/';
-
 
 const schema = yup.object({
     name: yup
@@ -30,6 +27,10 @@ const schema = yup.object({
         .string()
         .min(6, 'A senha deve ter pelo menos 6 caracteres')
         .required('Digite uma senha'),
+    phoneNumber: yup
+        .string()
+        .min(11, 'O número de celular deve conter os dígitos + DDD')
+        .required(),
     confirmPassword: yup
         .string()
         .oneOf([yup.ref('password')], 'As senhas devem ser iguais')
@@ -57,35 +58,26 @@ export function Register() {
             },
             {
                 validateStatus: () => true,
-            }
-        );
+            });
 
-        if(status === 200 || status ===201) {
+        if(status === 200 || status === 201) {
             setTimeout(() => {  
                 navigate('/login')
             }, 2000);
             toast.success('Conta criada com sucesso!')
-        } else if ( status === 400) {
+        } else if (status === 400) {
             toast.error('Email já cadastrado! Faça login para continuar')
         } else {
-
+            toast.error('Erro desconhecido ao criar a conta.')
         }
 
-    
         } catch (error) {
-            toast.error('Falha no sistema! Tente novamente')
-            
+            toast.error('Falha no sistema! Tente novamente');
         }
-
-    
     };
 
     return (
         <Container>
-            <LeftContainer>
-                <img src={Logo} alt='logo-devburger' />
-            </LeftContainer>
-
             <RightContainer>
                 <Title>
                     Criar conta
@@ -104,6 +96,12 @@ export function Register() {
                     </InputContainer>
 
                     <InputContainer>
+                        <label>Número de Telefone</label>
+                        <input type='text' {...register("phoneNumber")} />
+                        <p>{errors?.phoneNumber?.message}</p>
+                    </InputContainer>
+                    
+                    <InputContainer>
                         <label>Senha</label>
                         <input type='password' {...register("password")} />
                         <p>{errors?.password?.message}</p>
@@ -117,7 +115,7 @@ export function Register() {
 
                     <Button type="submit">Entrar</Button>
                 </Form>
-                <p>Já possui conta? <Link to={"/login"}>Clique aqui</Link></p>
+                <p>Já possui conta? <Link to="/login">Clique aqui</Link></p>
             </RightContainer>
         </Container>
     );
