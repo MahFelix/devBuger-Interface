@@ -1,35 +1,16 @@
-<<<<<<< HEAD
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
-=======
-import { useForm } from "react-hook-form";
+// Login.js
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
-import apiCodeBurger from "../../services/api";
-import { toast } from "react-toastify";
-import { useNavigate, Link } from "react-router-dom";
+import * as Yup from 'yup';
+
+import LoginImg from '../../assets/img-login-codeburger.svg';
+import Logo from '../../assets/logo-codeburger.svg';
+import { Button, ErrorMessage } from '../../components';
 import { useUser } from '../../hooks/UserContext';
-import { useState } from 'react';
-import {
-    Container,
-    Form,
-    InputContainer,
-    RightContainer,
-    Title,
-} from './styles';
-import { Button } from '../../components/Button/';
->>>>>>> 1304559383b00a21845d6f60e1bba82e6448bbf8
-
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as Yup from 'yup'
-
-import LoginImg from '../../assets/img-login-codeburger.svg'
-import Logo from '../../assets/logo-codeburger.svg'
-import { Button, ErrorMessage } from '../../components'
-import { useUser } from '../../hooks/UserContext'
-import api from '../../services/api'
+import api from '../../services/api';
 import {
   Container,
   LoginImage,
@@ -37,11 +18,11 @@ import {
   Label,
   Input,
   SigInLink
-} from './styles'
+} from './styles';
 
 export function Login() {
-  const navigate = useNavigate()
-  const { putUserData } = useUser()
+  const navigate = useNavigate();
+  const { putUserData } = useUser();
 
   const schema = Yup.object().shape({
     email: Yup.string()
@@ -49,53 +30,39 @@ export function Login() {
       .required('Informe um email válido'),
     password: Yup.string()
       .required('A senha é obrigatória')
-      .min(6, 'A senha deve conter no mínimo 6 caractéres')
-  })
+      .min(6, 'A senha deve conter no mínimo 6 caracteres'),
+  });
 
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema)
-  })
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = async clientData => {
     try {
-      const { data } = await api.post('session', {
+      const { data } = await api.post('sessions', {
         email: clientData.email,
-        password: clientData.password
-      })
+        password: clientData.password,
+      });
 
-<<<<<<< HEAD
-      putUserData(data)
-
-      toast.success('Seja bem vindo(a)')
-=======
-    return (
-        <Container>
-
-            <RightContainer>
-                <Title>
-                    Olá, seja bem vindo ao <span>Poupe Mais!</span>
-                    <br />
-                    Acesse com seu <span> Login e senha.</span>
-                </Title>
->>>>>>> 1304559383b00a21845d6f60e1bba82e6448bbf8
+      putUserData(data);
+      toast.success('Seja bem vindo(a)');
 
       setTimeout(() => {
-        if (data.admin) {
-          navigate('/pedidos')
-        } else navigate('/login')
-      }, 1000)
+        navigate(data.admin ? '/pedidos' : '/');
+      }, 1000);
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        toast.error('Email ou senha incorretos')
+      const status = error.response?.status;
+      if (status === 401) {
+        toast.error('Email ou senha incorretos');
       } else {
-        toast.error('Falha no sistema! Tente novamente')
+        toast.error('Falha no sistema! Tente novamente');
       }
     }
-  }
+  };
 
   return (
     <Container>
@@ -121,18 +88,14 @@ export function Login() {
           />
           <ErrorMessage>{errors.password?.message}</ErrorMessage>
 
-          <Button type="submit" style={{ marginTop: 16 }}>
-            Entrar
-          </Button>
+          <Button type="submit">Entrar</Button>
         </form>
 
         <SigInLink>
           Não possui conta?{' '}
-          <Link style={{ color: 'white' }} to="/cadastro">
-            Cadastrar
-          </Link>
+          <Link to="/cadastro">Cadastrar</Link>
         </SigInLink>
       </ContainerItens>
     </Container>
-  )
+  );
 }

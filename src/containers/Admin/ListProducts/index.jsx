@@ -68,10 +68,7 @@ function ListProducts() {
                   <TableCell>{formatCurrency(product.price)}</TableCell>
                   <TableCell align="center">{isOffer(product.offer)}</TableCell>
                   <TableCell align="center">
-                    <Img
-                      src={`https://devburger-backend-production-8436.up.railway.app/product-file/${product.path}`}
-                      alt={`imagem do produto ${product.name}`}
-                    />
+                  <Img src={product.url} alt={`imagem do produto ${product.name}`} />
                   </TableCell>
                   <TableCell>
                     <EditIconStyles onClick={() => editProduct(product)} />
