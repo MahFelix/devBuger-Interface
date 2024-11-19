@@ -1,109 +1,89 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-import { Link  as ReactLink} from "react-router-dom";
+import Background from '../../assets/backeground-tela-login-codeburger.svg'
 
-import Background from '../../assets/background.svg'
-import BackgroundLogin2 from '../../assets/background-Login.svg'
-
-export const Container  = styled.div`
-    display: flex;
-    height: 100vh;
-    width: 100vw;
+export const Container = styled.div`
+  height: 100vh;
+  width: 100vw;
+  background: url('${Background}');
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
-export const LeftContainer  = styled.div`
-    background: url('${Background}');
-    background-size: cover;
-    background-position: center;
 
-    height: 100%;
-    width: 100%;
-    max-width: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    img {
-        width: 80%;
-    }
+export const RegisterImage = styled.img`
+  height: 85%;
 `
-export const RightContainer  = styled.div`
-background: url('${BackgroundLogin2}');
-    background-size: cover;
-    background-position: center;
-    background-color: #1e1e1e;
 
-    height: 100%;
-    width: 100%;
-    max-width: 50%;
+export const ContainerItens = styled.div`
+  border-radius: 0 10px 10px 0;
+  background: #373737de;
+  height: 85%;
+  padding: 25px 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  h1 {
+    color: #fff;
+    font-family: Roboto;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 9px;
+  }
+  img {
+    margin-bottom: 6px;
+  }
 
-    p {
-        color: #fff;
-        font-size: 18px;
-        font-weight: 800px;
-
-        a {
-            text-decoration: underline;
-        }
-    }
-    
-`
-export const Title  = styled.h2`
-  font-family: "Road Rage", sans-serif;
-  font-size: 40px;
-  color: #9758a6;
-  
-
-`
-export const Form  = styled.form`
-
-display: flex;
-flex-direction: column;
-gap: 20px;
-padding: 20px;
-width: 100%;
-max-width: 400px;
-    
-`
-export const InputContainer  = styled.div`
+  form {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    width: 100%;
-
-    input {
-        width: 100%;
-        border: none;
-        height: 52px;
-        border-radius: 5px;
-        padding: 0 16px;
-    }
-
-    label {
-        font-size: 18px;
-        font-weight: 600;
-        color: #fff;
-    }
-
-    p {
-        font-size: 14px;
-        line-height: 80%;
-        color: #cd3051;
-        font-weight: 600;
-        height: 10px;
-
-    }
-    
+  }
+`
+export const Label = styled.p`
+  color: #fff;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  margin-top: ${props => (props.error ? '2px' : '4px')};
+  margin-bottom: 4px;
 `
 
-export const Link  = styled(ReactLink)`
- text-decoration: none;
- color: #fff;
+export const Input = styled.input`
+  border-radius: 5px;
+  background: #fff;
+  width: 285px;
+  height: 34px;
+  border: ${props => (props.error ? '2px solid #CC1717' : 'none')};
+  box-shadow: 3px 3px 10px 0px rgba(74, 144, 226, 0.19);
+  padding-left: 10px;
 `
- 
-    
+export const SigInLink = styled.p`
+  color: #fff;
+
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 350;
+  line-height: normal;
+  margin-top: 15px;
+
+  a {
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:active {
+      opacity: 0.5;
+    }
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`

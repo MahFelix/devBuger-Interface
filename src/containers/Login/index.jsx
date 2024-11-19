@@ -1,99 +1,107 @@
-import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
-import apiCodeBurger from "../../services/api";
-import { toast } from "react-toastify";
-import { useNavigate, Link } from "react-router-dom";
-import { useUser } from '../../hooks/UserContext';
-import { useState } from 'react';
-import {
-    Container,
-    Form,
-    InputContainer,
-    LeftContainer,
-    RightContainer,
-    Title,
-} from './styles';
-import Logo from '../../assets/logo.svg';
-import { Button } from '../../components/Button/';
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
-const schema = yup.object({
-    email: yup
-        .string()
-        .email('Digite um e-mail válido')
-        .required('O email é obrigatório'),
-    password: yup
-        .string()
-        .min(6, 'A senha deve ter pelo menos 6 caracteres')
-        .required('Digite uma senha'),
-}).required();
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
+
+import LoginImg from '../../assets/img-login-codeburger.svg'
+import Logo from '../../assets/logo-codeburger.svg'
+import { Button, ErrorMessage } from '../../components'
+import { useUser } from '../../hooks/UserContext'
+import api from '../../services/api'
+import {
+  Container,
+  LoginImage,
+  ContainerItens,
+  Label,
+  Input,
+  SigInLink
+} from './styles'
 
 export function Login() {
+  const navigate = useNavigate()
+  const { putUserData } = useUser()
 
-    const { putUserData } = useUser();
-    const navigate = useNavigate();
+  const schema = Yup.object().shape({
+    email: Yup.string()
+      .email('Email inválido')
+      .required('Informe um email válido'),
+    password: Yup.string()
+      .required('A senha é obrigatória')
+      .min(6, 'A senha deve conter no mínimo 6 caractéres')
+  })
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm({
-        resolver: yupResolver(schema)
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(schema)
+  })
 
-    const onSubmit = async (clientData) => {
-        const response = await toast.promise(
-            apiCodeBurger.post('/sessions', {
-                email: clientData.email,
-                password: clientData.password,
-            }),
-            {
-                pending: 'Verificando seus dados',
-                success: {
-                    render() {
-                        setTimeout(() => {
-                            navigate('/');
-                        }, 2000);
-                        return 'Seja Bem-Vindo(a)👌';
-                    },
-                },
-                error: 'Email ou Senha Incorretos 🤯'
-            }
-        );
-        
-        putUserData(response.data);
-    };
+  const onSubmit = async clientData => {
+    try {
+      const { data } = await api.post('session', {
+        email: clientData.email,
+        password: clientData.password
+      })
 
-    return (
-        <Container>
-            <LeftContainer>
-                <img src={Logo} alt='logo-devburger' />
-            </LeftContainer>
+      putUserData(data)
 
-            <RightContainer>
-                <Title>
-                    Olá, seja bem vindo ao <span>Dev Burguer!</span>
-                    <br />
-                    Acesse com seu <span> Login e senha.</span>
-                </Title>
+      toast.success('Seja bem vindo(a)')
 
-                <Form onSubmit={handleSubmit(onSubmit)}>
-                    <InputContainer>
-                        <label>Email</label>
-                        <input type='email'  {...register("email")} />
-                        <p>{errors?.email?.message}</p>
-                    </InputContainer>
+      setTimeout(() => {
+        if (data.admin) {
+          navigate('/pedidos')
+        } else navigate('/login')
+      }, 1000)
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        toast.error('Email ou senha incorretos')
+      } else {
+        toast.error('Falha no sistema! Tente novamente')
+      }
+    }
+  }
 
-                    <InputContainer>
-                        <label>Senha</label>
-                        <input type='password' {...register("password")} />
-                        <p>{errors?.password?.message}</p>
-                    </InputContainer>
+  return (
+    <Container>
+      <LoginImage src={LoginImg} alt="Login-image" />
+      <ContainerItens>
+        <img src={Logo} alt="logo-codeburger" />
+        <h1>Login</h1>
 
-                    <Button type="submit">Entrar</Button>
-                </Form>
-                <p>Não possui conta? <Link to={"/cadastro"}>Clique aqui.</Link></p>
-            </RightContainer>
-        </Container>
-    );
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
+          <Label>Email</Label>
+          <Input
+            type="email"
+            {...register('email')}
+            error={errors.email?.message}
+          />
+          <ErrorMessage>{errors.email?.message}</ErrorMessage>
+
+          <Label>Senha</Label>
+          <Input
+            type="password"
+            {...register('password')}
+            error={errors.password?.message}
+          />
+          <ErrorMessage>{errors.password?.message}</ErrorMessage>
+
+          <Button type="submit" style={{ marginTop: 16 }}>
+            Entrar
+          </Button>
+        </form>
+
+        <SigInLink>
+          Não possui conta?{' '}
+          <Link style={{ color: 'white' }} to="/cadastro">
+            Cadastrar
+          </Link>
+        </SigInLink>
+      </ContainerItens>
+    </Container>
+  )
 }

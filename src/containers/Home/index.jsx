@@ -1,16 +1,15 @@
-import React from "react"
+import React from 'react'
 
-import HomeLogo from '../../assets/homedalogo.svg'
-
-import {Container, HomeImg} from './styles'
-import CategoryCarousel from "../../components/CategoryCarousel"
+import HomeImage from '../../assets/ImgHome-codeburger.svg'
+import { CategoryCarousel, OffersCarousel } from '../../components'
+import { Container, HomeImg } from './styles'
 
 export function Home() {
-    
-    return (
-        <Container>
-            <HomeImg src={HomeLogo} alt="logo da home" />
-            <CategoryCarousel/>
-        </Container>
-    )
+  return (
+    <Container>
+      <HomeImg src={HomeImage} alt="Image da home" />
+      <CategoryCarousel />
+      <OffersCarousel />
+    </Container>
+  )
 }
