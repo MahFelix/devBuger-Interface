@@ -1,14 +1,19 @@
-import React from 'react'
-import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
+import React from 'react';
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 
-import paths from '../constants/paths'
-import { Home, Login, Register, Cart, Admin } from '../containers'
-import Products from '../containers/Products'
-import PrivateRoute from './private-route'
+import paths from '../constants/paths';
+import { Home, Login, Register, Cart, Admin } from '../containers';
+import Products from '../containers/Products';
+import PrivateRoute from './private-route';
 
 function MyRoutes() {
   return (
-    <Router>
+    <Router
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Register />} />
@@ -46,7 +51,7 @@ function MyRoutes() {
         />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default MyRoutes
+export default MyRoutes;

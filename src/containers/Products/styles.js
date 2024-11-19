@@ -19,12 +19,29 @@ export const CategoryButton = styled.button`
   cursor: pointer;
   background: none;
   border: none;
-  border-bottom: ${props => props.isActiveCategory && '2px solid #9758A6'};
-  color: ${props => (props.isActiveCategory ? '#9758A6' : '#9a9a9d')};
+  border-bottom: ${props => props.$isActiveCategory && '2px solid #9758A6'};
+  color: ${props => (props.$isActiveCategory ? '#9758A6' : '#9a9a9d')};
   font-size: 17px;
   line-height: 20px;
   padding-bottom: 5px;
-`
+  font-weight: 500;
+  text-transform: capitalize;
+  transition: color 0.3s ease, border-color 0.3s ease;
+
+  /* Efeito de hover */
+  &:hover {
+    color: #9758A6;
+    border-bottom: 2px solid #9758A6;
+  }
+
+  /* Foco no botão */
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(151, 88, 166, 0.3); /* Sombra suave no foco */
+  }
+`;
+
+
 
 export const ProductsContainer = styled.div`
   display: grid;
