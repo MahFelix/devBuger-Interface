@@ -1,7 +1,26 @@
+<<<<<<< HEAD
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+=======
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import apiCodeBurger from "../../services/api";
+import { toast } from "react-toastify";
+import { useNavigate, Link } from "react-router-dom";
+import { useUser } from '../../hooks/UserContext';
+import { useState } from 'react';
+import {
+    Container,
+    Form,
+    InputContainer,
+    RightContainer,
+    Title,
+} from './styles';
+import { Button } from '../../components/Button/';
+>>>>>>> 1304559383b00a21845d6f60e1bba82e6448bbf8
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
@@ -48,9 +67,21 @@ export function Login() {
         password: clientData.password
       })
 
+<<<<<<< HEAD
       putUserData(data)
 
       toast.success('Seja bem vindo(a)')
+=======
+    return (
+        <Container>
+
+            <RightContainer>
+                <Title>
+                    Olá, seja bem vindo ao <span>Poupe Mais!</span>
+                    <br />
+                    Acesse com seu <span> Login e senha.</span>
+                </Title>
+>>>>>>> 1304559383b00a21845d6f60e1bba82e6448bbf8
 
       setTimeout(() => {
         if (data.admin) {
